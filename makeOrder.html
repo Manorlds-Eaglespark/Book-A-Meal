@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="pageHeading">
+    <img src="images/tray2.png" alt="logo">
+    <h1 id="liner">Book-A-Meal</h1>
+    <h3 id="max_width">- Anorld Mukone -</h3>
+  <p id="max_width">Make Your Order, and Bon Apetit!</p>
+</div>
+
+<div style="overflow:auto">
+  <div class="menu">
+
+    <a href="#">View Order History</a>
+    <a href="#">Contact Restaurant Caterer</a>
+
+  </div>
+
+  <div class="main">
+    <h2>Order Details</h2>
+    <p> <B>Items:</B> Chicken, Chips with Gravy, at UGShs 25000.</p>
+    <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="/new_profile_info">
+        <div id="max_width"> <B>Qty:</B> <input name="qty" maxlength="2" style="width:20px;"/> Plates</div>
+        <div id="max_width"><B>Comment:</B> <input name="qty" maxlength="200"/></div></br>
+        <div><input type="checkbox" style="width:10pt"> I accept and expect those items at that price as specified.</div>
+        <input type="submit" style="margin-left:25px; padding:15px;background-color:#ffa500;color:white;border:none;border-radius: 10%;"/>
+    </form>    
+  </div>
+
+  <div class="right">
+    <h2>Important</h2>
+    <p>Please fill in any required details to successfully complete your order.</p>
+  </div>
+</div>
+
+<div class="footer">Anorld Mukone, 2018</div>
+
+</body>
+</html>
