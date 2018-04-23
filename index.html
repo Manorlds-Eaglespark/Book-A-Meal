@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="pageHeading">
+    <img src="images/tray2.png" alt="logo">
+  <h1 id="liner">Book-A-Meal</h1>
+</div>
+
+<div style="overflow:auto">
+  <div class="menu">
+
+    &nbsp;
+
+  </div>
+
+  <div class="main">
+    <h2>Sign In As</h2>
+    <p>Order Food at your favourite restaurant menu direct or service orders from your restaurant Customers</p>
+  
+    
+
+
+    <div id="max_width"><button class="signin" onclick="document.getElementById('id01').style.display='block'" style="width:auto;"><img src="images/user_small.png" alt="logo"> <B> Customer</B></button></div>
+    <div id="max_width"><button class="signin" onclick="document.getElementById('id02').style.display='block'" style="width:auto;"><img src="images/restaurant.png" alt="logo"><strong> Restuarant Caterer</strong></button></div>
+      <h2>Or</h2>
+      <div id="max_width"><button class="createAccount" onclick="document.getElementById('id03').style.display='block'" style="width:auto;"><img src="images/user_small.png" alt="logo"><span style="vertical-align:middle;"> Create An Account Now<span></button></div>
+      </br></br>
+    <div id="id01" class="modal">
+      
+      <form class="modal-content animate" action="/action_page.php">
+        <div class="imgcontainer">
+          <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+          <img src="images/user_big.png" alt="Avatar" class="avatar">
+        </div>
+    
+        <div class="container">
+          <label for="uname"><b>Email</b></label>
+          <input type="text" placeholder="Enter Username" name="uname" required>
+    
+          <label for="psw"><b>Password</b></label>
+          <input type="password" placeholder="Enter Password" name="psw" required>
+            
+          <button type="submit">Login</button>
+          <label>
+            <input type="checkbox" checked="checked" name="remember"> Remember me
+          </label>
+        </div>
+    
+        <div class="container" style="background-color:#f1f1f1">
+          <span class="psw">Forgot <a href="#">password?</a></span>
+        </div>
+      </form>
+    </div>
+
+
+
+    <div id="id02" class="modal">
+      
+        <form class="modal-content animate" action="/action_page.php">
+          <div class="imgcontainer">
+            <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <img src="images/user_big.png" alt="Avatar" class="avatar">
+          </div>
+      
+          <div class="container">
+            <label for="uname"><b>Email</b></label>
+            <input type="text" placeholder="Enter Username" name="uname" required>
+      
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+              
+            <button type="submit">Login</button>
+            <label>
+              <input type="checkbox" checked="checked" name="remember"> Remember me
+            </label>
+          </div>
+      
+          <div class="container" style="background-color:#f1f1f1">
+            <span class="psw">Forgot <a href="#">password?</a></span>
+          </div>
+        </form>
+    </div>
+   
+
+    <div id="id03" class="modal">
+      
+        <form class="modal-content animate" action="/action_page.php">
+          <div class="imgcontainer">
+            <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <img src="images/user_big.png" alt="Avatar" class="avatar">
+          </div>
+      
+          <div class="container">
+            <label for="uname"><b>Name</b></label>
+            <input type="text" placeholder="Enter Username" name="uname" required>
+
+            <label for="uname"><b>Email Address</b></label>
+            <input type="text" placeholder="Enter Username" name="uname" required>
+
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+              
+            <button type="submit">Submit</button>
+            
+          </div>
+      
+        </form>
+    </div>
+    
+    <script>
+    // Get the modal
+    var modal1 = document.getElementById('id01');
+    var modal2 = document.getElementById('id02');
+    var modal3 = document.getElementById('id03');
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal1 || event.target == modal2 || event.target == modal3) {
+            modal.style.display = "none";
+        }
+    }
+    </script>
+    
+
+
+
+
+
+  </div>
+
+  <div class="right">
+    <h2>About</h2>
+    <p>Book-A-Meal is an application that allows customers to make food orders and helps the food vendor know what the customers want to eat.</p>
+  </div>
+</div>
+
+<div class="footer">Anorld Mukone, 2018</div>
+
+</body>
+</html>
