@@ -96,6 +96,8 @@ def internal_error(exception):
 
 # Register a user
 @app.route('/auth/signup')
+def signup():
+   return "New Account created"
 
 
 # Login a user
