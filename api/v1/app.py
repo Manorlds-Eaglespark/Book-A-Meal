@@ -3,25 +3,28 @@ import random
 import time
 app = Flask(__name__)
 
+#we need a User object, this object will represent the Customers and Restaurant caterers who will be using the application
 class User:
-   id = 0
-   name =  ""
-   email = ""
-   time_created = 0.0 
-   
+   id 
+   name 
+   email 
+   admin_status 
+   time_created   
+   #Constructor for the User object, for initialization
    def __init__(self, name, email):
       self.id = random.randint(1001)
       self.name = name
-      self.email = city
+      self.email = email
+      self.admin_status = "false"
       self.time_created = time.time()
 
-
+#Customers will be ordering meal instances whose ids will be added to the ordered items for customers
 class Meal:
-   id = 0
-   name =  ""
-   price = ""
+   id 
+   name 
+   price 
    time_created = 0.0 
-   
+   #Constructor
    def __init__(self, name, price):
       self.id = random.randint(1001)
       self.name = name
@@ -30,32 +33,37 @@ class Meal:
 
 
 
-
+#We will record the meal option selected and by who in this object
 class Order:
-   id = 0
-   mealId =  0
-   userId = 0
-   time_created = 0.0 
+   id
+   mealId           #the meal which was ordered
+   userId           #the person that ordered the meal
+   time_created     #time the meal was ordered
    
+   #constructor
    def __init__(self, mealId, userId):
       self.id = random.randint(1001)
-      self.mealId = name
-      self.userId = city
+      self.mealId = mealId
+      self.userId = userId
       self.time_created = time.time()
 
-
+#Menu object will just be an object to help us hold meal Ids selected for today's serving
 #MealIds is a string made from a string of meal ids separated by commas e.g "10,5,6,18" 
 class Menu:
-   id = 0
-   mealIds =  ""
-   date = ""
+   id 
+   mealIds
+   date 
    
    def __init__(self, mealIds):
       self.id = random.randint(1001)
       self.mealIds = mealIds
       self.time_created = time.time()
 
-
+      
+#We save exception and return error page for every view. 
+#It is a lot of work to write this code everywhere. 
+#Flask provides a method to do this. So we define an errorhandler method like this.
+      
 @app.errorhandler(400)
 def internal_error(exception):
         app.logger.error(exception)
@@ -84,72 +92,29 @@ def internal_error(exception):
         app.logger.error(exception)
         return "Service Unavailable: The server is currently unable to handle the request due to a temporary overloading or maintenance of the server."    
 
+# For this commit, lemme list the methods we need for the api
 
 # Register a user
-@app.route('/auth/signup')
-def signup():
-   return "1"
-
 
 # Login a user
-@app.route('/auth/login')
-def login():
-   return "2"
-
 
 # Get all the meal options
-@app.route('/meals/')
-def all_meals():
-   return "3"
-
 
 # Add a meal option
-@app.route('/meals/ ')
-def add_meal():
-   return "4"
-
 
 # Update the information of a meal option
-@app.route('/meals/<mealId>')
-def update_meal():
-   return "5"
-
 
 # Remove a meal option
-@app.route('/meals/<int:mealId>')
-def remove_meal():
-   return "6"
-
 
 # Setup the menu for the day 
-@app.route('/menu/')
-def set_today_menu():
-   return "7"
-
 
 # Get the menu for the day
-@app.route('/menu/')
-def today_menu():
-   return "8"
-
 
 # Select the meal option from the menu
-@app.route('/orders')
-def select_order():
-   return "9"
-
 
 # Modify an order
-@app.route('/orders/orderId')
-def modify_order():
-   return "10"
 
-
-# Get all the orders 
-@app.route('/orders')
-def orders():
-   return "11"
-
+# Get all the orders
 
 
 if __name__ == "__main__":
