@@ -22,6 +22,14 @@ body{
   color:black;
 }
 
+.OrderSubmit{
+	padding:15px;
+	background-color:#ffa500;
+	color:white;
+	border:none;
+	border-radius: 10%;
+}
+
 #liner{
     display:inline-block;
 }
