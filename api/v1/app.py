@@ -115,6 +115,8 @@ def signup():
 
 # Remove a meal option
 @app.route('/meals/<int:mealId>')
+def remove_meal(mealId):
+   return 'Meal %d removed' % mealId
 
 
 # Setup the menu for the day 
