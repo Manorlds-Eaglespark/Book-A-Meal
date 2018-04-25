@@ -92,29 +92,46 @@ def internal_error(exception):
         app.logger.error(exception)
         return "Service Unavailable: The server is currently unable to handle the request due to a temporary overloading or maintenance of the server."    
 
-# For this commit, lemme list the methods we need for the api
+# For this commit, lemme list the routes we need for the api, to which next we will build unittests
 
 # Register a user
+@app.route('/auth/signup')
+
 
 # Login a user
+@app.route('/auth/login')
 
 # Get all the meal options
+@app.route('/meals/')
 
 # Add a meal option
+@app.route('/meals/ ')
+
 
 # Update the information of a meal option
+@app.route('/meals/<int:mealId>')
 
 # Remove a meal option
+@app.route('/meals/<int:mealId>')
+
 
 # Setup the menu for the day 
+@app.route('/menu/')
+
 
 # Get the menu for the day
+@app.route('/menu/')
+
 
 # Select the meal option from the menu
+@app.route('/orders')
 
 # Modify an order
+@app.route('/orders/<int:orderId>')
 
-# Get all the orders
+# Get all the orders 
+@app.route('/orders')
+
 
 
 if __name__ == "__main__":
