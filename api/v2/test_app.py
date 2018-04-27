@@ -36,13 +36,33 @@ class TestFlaskApi(unittest.TestCase):
              {
                  'id': 1,
                  'mealId': 4,
-                 'userId': 27,
                  'time_created': 'Monday, 14th February 2018'
              },
              {
                  'id': 2,
                  'mealId': 7,
-                 'userId': 34,
+                 'time_created': 'Monday, 14th February 2018'
+             }
+        ])
+        self.assertEqual(response.status_code, 200)
+
+
+
+        
+order = [
+    {
+        'id': 1,
+        'mealId': 4,
+        'time_created': 'Monday, 14th February 2018'
+    }
+
+        def test_select_order(self):
+        response = self.app.get('/orders/1')
+        data = json.loads(response.data)
+        self.assertEqual(data['order'], [
+             {
+                 'id': 1,
+                 'mealId': 4,
                  'time_created': 'Monday, 14th February 2018'
              }
         ])
