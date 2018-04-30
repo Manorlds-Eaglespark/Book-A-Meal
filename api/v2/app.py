@@ -130,6 +130,19 @@ def make_order():
                             return response
 
 
+# Modify an Order 
+@app.route('/order/<int:order_id>', methods=['PUT'])
+def modify_order(order_id):
+            meal_id = str(request.get_json().get('meal_id'))
+                    
+            response = jsonify({
+                                    'new meal_id': meal_id,
+                                    'date_created': "original created time",
+                                    'date_updated': time.asctime( time.localtime( time.time() ))
+                                })
+            response.status_code = 200
+            return response
+
     
 # Get menu for the day
 @app.route('/menu/', methods=['GET'])
