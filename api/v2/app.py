@@ -1,5 +1,6 @@
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
+import time
 
 app = Flask(__name__)
 
@@ -21,12 +22,14 @@ meals = [
 orders = [
     {
         'id': 1,
-        'mealId': 4,
+        'user_id': 10,
+        'meal_id': 4,
         'time_created': 'Monday, 14th February 2018'
     },
     {
         'id': 2,
-        'mealId': 7,
+        'user_id': 11, 
+        'meal_id': 7,
         'time_created': 'Monday, 14th February 2018'
     }
 ]
@@ -35,7 +38,7 @@ orders = [
 order = [
     {
         'id': 1,
-        'mealId': 4,
+        'meal_id': 4,
         'time_created': 'Monday, 14th February 2018'
     }
 ]
@@ -43,33 +46,31 @@ order = [
 menu = [
     {
         'id': 1,
-        'mealIds': '4,2,5,6,7',
-        'date': 'Monday, 14th February 2018'
+        'meal_ids': '4,2,5,6,7',
+        'time_created': 'Monday, 14th February 2018'
     }
 ]
 
 
 
 
-@app.route('/auth/signin', methods=['POST'])
-def login(self, username, password):
-    return self.app.post('/auth/signin', data=dict(
-        username=username,
-        password=password
-    ), follow_redirects=True)
 
-   
-
+#Save a new user to make a signup
 @app.route('/auth/signup', methods=['POST'])
-def main():
-   url = request.form.get('return_url')
-   # just example. will return value of sent return_url
-   return Response(
-      response=json.dumps({'return_url': url}),
-      status_code = 201,
-      content_type='application/json'
-   )
+def signup():
+            name = str(request.get_json().get('name'))
+            email = str(request.get_json().get('email'))
+            password = str(request.get_json().get('password'))
+            if name:
+               if email:
+                   if password:
 
+                            response = jsonify({
+                                'name': name,
+                                'email': email
+                            })
+                            response.status_code = 201
+                            return response
 
 
 # Select the meal option from the menu
@@ -78,9 +79,32 @@ def select_order(orderId):
     return jsonify({'order': order})
 
 
+# Get all the meal options
 @app.route('/meals/', methods=['GET'])
-def get_tasks():
+def get_meals():
     return jsonify({'meals': meals})
+
+
+
+
+# Add a meal option
+@app.route('/meals/', methods=['POST'])
+def add_a_meal():
+            name = str(request.get_json().get('name'))
+            price = str(request.get_json().get('price'))
+            time_created = str(request.get_json().get('time_created'))
+            if name:
+               if price:
+                   if time_created:
+                            response = jsonify({
+                                'name': name,
+                                'price': price,
+                                'time_creatd': time.asctime( time.localtime(time.time()) )
+                            })
+                            response.status_code = 201
+                            return response
+
+
 
 
 # Get all the orders 
@@ -88,43 +112,24 @@ def get_tasks():
 def get_orders():
     return jsonify({'orders': orders})
 
-   # Update the information of a meal option
-@app.route('/meals/<int:mealId>', methods=['PUT'])
-def update_meal(mealId):
-   
-    if request.method =='PUT':
 
-        name = request.form['name']
+# Make an order 
+@app.route('/orders', methods=['POST'])
+def make_order():
+            meal_id = request.get_json().get('meal_id')
+            user_id = request.get_json().get('user_id')
 
-        price = request.form['price']
+            if meal_id:
+               if user_id:
+                            response = jsonify({
+                                'meal_id': meal_id,
+                                'user_id': user_id,
+                                'Expiration time': time.asctime( time.localtime( time.time()  + 600 ))
+                            })
+                            response.status_code = 201
+                            return response
 
-        time_created = request.form['time_created']
 
-        #creates users with above credentials  
-
-        return jsonify({'status':'New user created'}), 202
-
-
-
-@app.route('/auth/signup', methods=['POST'])
-
-def signup():
-
-    """method implementing signup"""
-
-    if request.method =='POST':
-
-        name = request.form['name']
-
-        email = request.form['email']
-
-        password = request.form['password']
-
-        #create user with above credentials
-
-        return jsonify({'status':'new user added'}), 201
-
-      
     
 # Get menu for the day
 @app.route('/menu/', methods=['GET'])
@@ -134,20 +139,16 @@ def get_menu():
 
 # Setup the menu for the day 
 @app.route('/menu/', methods=['POST'])
-
 def create_menu():
+            meal_ids = str(request.get_json().get('meal_ids'))
+            if meal_ids:
+                    response = jsonify({
+                        'meal_ids': meal_ids,
+                        'time_created': time.asctime( time.localtime(time.time()) )
+                    })
+                    response.status_code = 201
+                    return response
 
-    """method implementing signup"""
-
-    if request.method =='POST':
-
-        mealIds = request.form['mealIds']
-
-        date = request.form['date']
-
-        #create menu with above credentials
-
-        return jsonify({'status':'You have set the menu for today'}), 201
 
 
 if __name__ == '__main__':

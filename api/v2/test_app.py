@@ -1,13 +1,22 @@
 import unittest
 import app
-import requests
 import json
 
 
 class TestFlaskApi(unittest.TestCase):
     def setUp(self):
         self.app = app.app.test_client()
-       
+        self.user = [{'name': 'Bob',
+                      'password'; 'xxy210'}] 
+
+
+
+    def test_signup_new_user(self):
+        """Test API to create a new user"""
+        res = self.client().post('/auth/signup', data=self.user(0])
+        self.assertEqual(res.status_code, 201)
+        self.assertIn('Bob', str(res.data.name))
+
 
     def test_all_meals(self):
         response = self.app.get('/meals/')
@@ -49,14 +58,15 @@ class TestFlaskApi(unittest.TestCase):
 
 
         
-order = [
-    {
-        'id': 1,
-        'mealId': 4,
-        'time_created': 'Monday, 14th February 2018'
-    }
+        order = [
+            {
+                'id': 1,
+                'mealId': 4,
+                'time_created': 'Monday, 14th February 2018'
+            }
+        ]
 
-        def test_select_order(self):
+    def test_select_order(self):
         response = self.app.get('/orders/1')
         data = json.loads(response.data)
         self.assertEqual(data['order'], [
@@ -76,7 +86,6 @@ order = [
                 {
                     'id': 1,
                     'mealIds': '4,2,5,6,7',
-                    'userId': 27,
                     'date': 'Monday, 14th February 2018'
                 }
                 
