@@ -5,7 +5,7 @@
       - "3.6"
   
   script:
-    - unittest
+    - python test_app.py
 
 
 
