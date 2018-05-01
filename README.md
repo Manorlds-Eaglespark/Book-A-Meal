@@ -14,3 +14,5 @@ Sofar we have 3 branches
 1. Main branch: Here will be the final code when the project is finally done
 2. UserInterface: UI component branch
 3. API_development: This is where the API is taking shape that will power the whole application to life.
+
+#to be edited
