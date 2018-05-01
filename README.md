@@ -16,4 +16,4 @@ Sofar we have 3 branches
 2. UserInterface: UI component branch
 3. API_development: This is where the API is taking shape that will power the whole application to life.
 
-#Am editing this shortly
+#Am editing this Readme shortly
