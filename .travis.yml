@@ -1,31 +1,20 @@
   language: python
-  sudo: required
-  group: edge
   python:
   
-      - "3.6"
+      - "3.6" 
   
-  env:
-  global:
-    - CC_TEST_REPORTER_ID=fe65e7ef684230ea42339397e542ed92b792f2c739699f64d2e3d18808e39dcf
-    
-  before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-    
-  
-  script:
-    - coverage run --source= ./api/v2/test_app.py run_test
-    - coverage report 
-   
-  after_script:
-    - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
-    
-
-
-# command to install dependencies
+  # command to install dependencies
 
   install:
   - pip3 install -r ./requirements.txt
-  - pip3 install coverage
-  - npm install
+  - pip3 install coveralls
+  
+  script:
+  - python manage.py run_test
+  - coverage run --source='.' --omit='/api/v2/*'  test_app.py run_test
+  - coverage report --omit='./*'
+
+# push report to coveralls.io
+after_success:
+- coveralls
+
