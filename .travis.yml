@@ -1,24 +1,26 @@
   language: python
-  
+  sudo: required
+  group: edge
   python:
   
       - "3.6"
       
   before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  
+    - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+    - chmod +x ./cc-test-reporter
+    - ./cc-test-reporter before-build
   
   env:
   global:
-    - GIT_COMMITTED_AT=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then git log -1 --pretty=format:%ct; else git log -1 --skip 1 --pretty=format:%ct; fi)
-    - CC_TEST_REPORTER_ID=[fe65e7ef684230ea42339397e542ed92b792f2c739699f64d2e3d18808e39dcf]
+    - CC_TEST_REPORTER_ID="fe65e7ef684230ea42339397e542ed92b792f2c739699f64d2e3d18808e39dcf"
   
   script:
     - python ./api/v2/test_app.py
+    - coverage run ./api/v2/test_app.py test -v 2 
    
   after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - coverage xml
+  - if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
 
 
 
@@ -26,3 +28,5 @@
 
   install:
   - pip3 install -r ./requirements.txt
+  - pip install coverage
+  - npm install
