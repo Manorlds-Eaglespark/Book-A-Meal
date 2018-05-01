@@ -16,7 +16,7 @@
   
   script:
     - python ./api/v2/test_app.py
-    - coverage run ./api/v2/test_app.py test -v 2 
+    - coverage run ./api/v2/test_app.py -v 
    
   after_script:
   - coverage xml
