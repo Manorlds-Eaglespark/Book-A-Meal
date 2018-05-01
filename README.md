@@ -1,4 +1,4 @@
-# Book-A-Meal      #https://api.travis-ci.org/repos/Manorlds-Eaglespark/Book-A-Meal/cc.xml?branch=master
+# Book-A-Meal     
 Book-A-Meal is an application that allows customers to make food orders and helps the food vendor know what the customers want to eat.
 
 To view how an Html template proposed for this project, please visit the link below;
