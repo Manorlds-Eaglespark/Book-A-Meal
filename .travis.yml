@@ -10,7 +10,7 @@
   - pip3 install coveralls
   
   script:
-  - python ./api/v2/.test_app.py run_test
+  - python ./api/v2/test_app.py run_test
   - coverage run --source= ./api/v2/test_app.py run_test
   - coverage report --omit='./*'
 
