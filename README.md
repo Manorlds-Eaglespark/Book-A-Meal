@@ -1,4 +1,5 @@
-# Book-A-Meal     
+# Book-A-Meal     [![Build Status](https://travis-ci.org/Manorlds-Eaglespark/Book-A-Meal.svg?branch=master)](https://travis-ci.org/Manorlds-Eaglespark/Book-A-Meal)
+
 Book-A-Meal is an application that allows customers to make food orders and helps the food vendor know what the customers want to eat.
 
 To view how an Html template proposed for this project, please visit the link below;
