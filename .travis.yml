@@ -12,20 +12,22 @@
   before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
+  - ./cc-test-reporter upload-coverage
     
   
   script:
     - python ./api/v2/test_app.py
     - coverage run ./api/v2/test_app.py -v 
+    - coverage run --branch --source=app1,app2 ./manage.py test
    
   after_script:
     - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+    
 
 
 # command to install dependencies
 
   install:
   - pip3 install -r ./requirements.txt
-  - pip install coverage
+  - pip3 install coverage
   - npm install
