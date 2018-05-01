@@ -4,24 +4,23 @@
   python:
   
       - "3.6"
-      
-  before_script:
-    - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-    - chmod +x ./cc-test-reporter
-    - ./cc-test-reporter before-build
   
   env:
   global:
-    - CC_TEST_REPORTER_ID="fe65e7ef684230ea42339397e542ed92b792f2c739699f64d2e3d18808e39dcf"
+    - CC_TEST_REPORTER_ID=fe65e7ef684230ea42339397e542ed92b792f2c739699f64d2e3d18808e39dcf
+    
+  before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+    
   
   script:
     - python ./api/v2/test_app.py
     - coverage run ./api/v2/test_app.py -v 
    
   after_script:
-  - coverage xml
-  - if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_PYTHON_VERSION" == "3.6" ]]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
-
+    - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 
 # command to install dependencies
