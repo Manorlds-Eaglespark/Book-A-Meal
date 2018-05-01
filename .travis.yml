@@ -12,13 +12,12 @@
   before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter format-coverage
+  - ./cc-test-reporter format-coverage -t
     
   
   script:
-    - python ./api/v2/test_app.py
-    - coverage run ./api/v2/test_app.py -v 
-    - coverage run --branch --source=app1,app2 ./manage.py test
+    - coverage run --source= ./api/v2/test_app.py run_test
+    - coverage report 
    
   after_script:
     - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
