@@ -9,10 +9,17 @@
   - pip3 install -r ./requirements.txt
   - pip3 install coveralls
   
+  before_script:
+  - pip install -r test_requirements.txt
+  - git clone https://github.com/Manorlds-Eaglespark/Book-A-Meal.git
+  - cd python-coveralls-example
+  - git checkout -qf 3e82fd5159b84bebe9bc6c9fd3959f322e6f7098
+  - py.test ./api/v2/test_app.py --cov=example
+  - cd -
+  
   script:
-  - coverage run --source= ./api/v2/test_app.py 
-  - coverage report --omit='./*'
-
+  - py.test ./api/v2/test_app.py --doctest-modules --pep8 coveralls -v --cov coveralls --cov-report term-missing
+  
 # push report to coveralls.io
 after_success:
 - coveralls
