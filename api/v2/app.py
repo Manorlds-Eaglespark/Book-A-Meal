@@ -1,91 +1,10 @@
 """This is the API file for the Book-A-Meal application"""
 import time
+import dummy_data
 from flask import Flask, jsonify, request
 
 
 app = Flask(__name__)
-
-users = [
-    {
-        "id": 0,
-        "name": "Bob",
-        "email": "bob@gmail.com", 
-        "password": "xxy210",
-        "login_status": "logged_out"
-    },
-    {
-        "id": 1,
-        "name": "Frank Kizamba",
-        "email": "kizamba@gmail.com", 
-        "password": "xxppzulu210",
-        "login_status": "logged_out"
-    }
-]
-
-meals = [
-    {
-        'id': 0,
-        'name': 'Chips and Chicken',
-        'price': '10000',
-        'time_created': 'Wed May  2 16:29:35 2018',
-    },
-    {
-        'id': 1,
-        'name': 'Beef and Rice',
-        'price': '25000',
-        'time_created': 'Wed May  2 16:29:35 2018',
-    },
-    {
-        'id': 2,
-        'name': 'Chicken and Matooke',
-        'price': '35000',
-        'time_created': 'Wed May  2 16:29:35 2018',
-    }
-]
-
-orders = [
-    {
-        'id': 1,
-        'user_id': 10,
-        'meal_id': 4,
-        'time_created': 'Wed May  2 16:39:35 2018',
-        'time_expiration': 'Wed May  2 16:49:35 2018'
-
-    },
-    {
-        'id': 2,
-        'user_id': 11,
-        'meal_id': 7,
-        'time_created': 'Wed May  2 16:39:35 2018',
-        'time_expiration': 'Wed May  2 16:49:35 2018'
-
-
-    }
-]
-
-order = [
-    {
-        'id': 0,
-        'meal_id': 4,
-        'time_created': 'Wed May  2 16:49:35 2018',
-        'time_expiration': 'Wed May  2 16:59:35 2018'
-    }
-]
-
-menus = [
-    {
-        'id': 0,
-        'meal_ids': '4,2,5,6,7',
-        'time_created': '2018-05-01 17:13:38'
-    },
-    {
-        'id': 1,
-        'meal_ids': '4,2,5,6,7',
-        'time_created': '2018-05-03 17:13:38'
-    }
-]
-
-
 
 
 #Save a new user to make a signup
@@ -105,7 +24,7 @@ def signup():
             'password': password,
             'login_status':'logged_in'
         }
-        users.append(new_user)
+        dummy_data.users.append(new_user)
 
         response = jsonify({
             "message":"Account created, 200 OK"
@@ -123,12 +42,12 @@ def login():
     password = str(request.get_json().get('password'))
 
     emails, passwords = [], []    
-    for user in users:
+    for user in dummy_data.users:
         emails.append(user['email'])
         passwords.append(user['password'])
 
     if email in emails and password in passwords:
-        users[emails.index(email)]['login_status'] = "logged_in"
+        dummy_data.users[emails.index(email)]['login_status'] = "logged_in"
         response = jsonify({
             "message":"User successfully logged in",
             "status": "200, ok",
@@ -143,15 +62,15 @@ def login():
 def select_order(order_id):
     """Method that selects a meal to an order"""
     all_orders = []    
-    for order in orders:
+    for order in dummy_data.orders:
         all_orders.append(order['id'])
     if order_id in all_orders:
         response =  jsonify({
-            "id": orders[all_orders.index(order_id)]['id'],
-            "meal_id": orders[all_orders.index(order_id)]['meal_id'],
-            "user_id": orders[all_orders.index(order_id)]['user_id'],
-            "time_created": orders[all_orders.index(order_id)]['time_created'],
-            "time_expiration": orders[all_orders.index(order_id)]['time_expiration']
+            "id": dummy_dataorders[all_orders.index(order_id)]['id'],
+            "meal_id": dummy_data.orders[all_orders.index(order_id)]['meal_id'],
+            "user_id": dummy_data.orders[.all_orders.index(order_id)]['user_id'],
+            "time_created": dummy_data.orders[all_orders.index(order_id)]['time_created'],
+            "time_expiration": dummy_data.orders[all_orders.index(order_id)]['time_expiration']
             })
         response.status_code = 200
         return response
@@ -160,7 +79,7 @@ def select_order(order_id):
 @app.route('/meals/', methods=['GET'])
 def get_all_meals():
     """This method returns all meals stored in the system"""
-    response = jsonify({'meals': meals}) 
+    response = jsonify({'meals': dummy_data.meals}) 
     response.status_code = 200
     return response
 
@@ -245,11 +164,35 @@ def get_menu():
 def create_menu():
     """Method to create a menu for that day"""
     meal_ids = str(request.get_json().get('meal_ids'))
+
+    meal_ids = meal_ids.split(",")
+    for i in range(len(meal_ids)):
+        #checking if digit
+        if meal_ids[i].isdigit():
+            meal_ids[i] = int(meal_ids[i])
+        else:
+            response = jsonify({
+            'message': "Please add only integer values as ids",
+            'status':  "400, Bad Request"
+            })
+            response.status_code = 400
+            return response 
     
-    if meal_ids:
-        #add the new menu
+    system_meals = []
+    for meal in dummy_data.meals:
+        system_meals.append(int(meal['id']))
+
+    for m_ids in meal_ids:
+        if m_ids not in system_meals:
+            response = jsonify({
+            'message': "You added a meal not in the system",
+            'status':  "400, Bad Request"
+            })
+        response.status_code = 400
+        return response 
+            
         todays_menu = {
-            'id': len(menus),
+            'id': len(dummy_data.menus),
             'meal_ids': meal_ids,
             'time_created': time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
         }
