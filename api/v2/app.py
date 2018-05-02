@@ -68,7 +68,7 @@ def signup():
             })
         response.status_code = 201
         return response
-    return None
+    #return None
 
 
 @app.route('/orders/<int:order_id>', methods=['GET'])
@@ -99,7 +99,7 @@ def add_a_meal():
             })
         response.status_code = 201
         return response
-    return None
+    #return None
 
 
 @app.route('/orders', methods=['GET'])
@@ -122,7 +122,7 @@ def make_order():
             })
         response.status_code = 201
         return response
-    return None
+    #return None
 
 
 @app.route('/order/<int:order_id>', methods=['PUT'])
@@ -156,7 +156,7 @@ def create_menu():
             })
         response.status_code = 201
         return response
-    return None
+    #return None
 
 
 
