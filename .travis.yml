@@ -12,7 +12,7 @@
   
   
   script:
-  - pytest --cov= ./    #api/v2/test_app.py #--doctest-modules --pep8 coveralls -v --cov coveralls --cov-report term-missing
+  - pytest --cov= ./api/v2/    #api/v2/test_app.py #--doctest-modules --pep8 coveralls -v --cov coveralls --cov-report term-missing
   
 # push report to coveralls.io
 after_success:
