@@ -7,12 +7,14 @@ app = Flask(__name__)
 
 users = [
     {
+        "id": 0,
         "name": "Bob",
         "email": "bob@gmail.com", 
         "password": "xxy210",
         "login_status": "logged_out"
     },
     {
+        "id": 1,
         "name": "Frank Kizamba",
         "email": "kizamba@gmail.com", 
         "password": "xxppzulu210",
@@ -22,16 +24,22 @@ users = [
 
 meals = [
     {
+        'id': 0,
+        'name': 'Chips and Chicken',
+        'price': '10000',
+        'time_created': 'Wed May  2 16:29:35 2018',
+    },
+    {
         'id': 1,
         'name': 'Beef and Rice',
         'price': '25000',
-        'time_created': 'Monday, 14th February 2018'
+        'time_created': 'Wed May  2 16:29:35 2018',
     },
     {
         'id': 2,
         'name': 'Chicken and Matooke',
         'price': '35000',
-        'time_created': 'Monday, 14th February 2018'
+        'time_created': 'Wed May  2 16:29:35 2018',
     }
 ]
 
@@ -40,29 +48,40 @@ orders = [
         'id': 1,
         'user_id': 10,
         'meal_id': 4,
-        'time_created': 'Monday, 14th February 2018'
+        'time_created': 'Wed May  2 16:39:35 2018',
+        'time_expiration': 'Wed May  2 16:49:35 2018'
+
     },
     {
         'id': 2,
         'user_id': 11,
         'meal_id': 7,
-        'time_created': 'Monday, 14th February 2018'
+        'time_created': 'Wed May  2 16:39:35 2018',
+        'time_expiration': 'Wed May  2 16:49:35 2018'
+
+
     }
 ]
 
 order = [
     {
-        'id': 1,
+        'id': 0,
         'meal_id': 4,
-        'time_created': 'Monday, 14th February 2018'
+        'time_created': 'Wed May  2 16:49:35 2018',
+        'time_expiration': 'Wed May  2 16:59:35 2018'
     }
 ]
 
-menu = [
+menus = [
+    {
+        'id': 0,
+        'meal_ids': '4,2,5,6,7',
+        'time_created': '2018-05-01 17:13:38'
+    },
     {
         'id': 1,
         'meal_ids': '4,2,5,6,7',
-        'time_created': 'Monday, 14th February 2018'
+        'time_created': '2018-05-03 17:13:38'
     }
 ]
 
@@ -76,10 +95,20 @@ def signup():
     name = str(request.get_json().get('name'))
     email = str(request.get_json().get('email'))
     password = str(request.get_json().get('password'))
+    
+    #add new user
     if name and email and password:
-        response = jsonify({
+        new_user = {
+            'id': len(users),
             'name': name,
-            'email': email
+            'email': email,
+            'password': password,
+            'login_status':'logged_in'
+        }
+        users.append(new_user)
+
+        response = jsonify({
+            "message":"Account created, 200 OK"
             })
         response.status_code = 201
         return response
@@ -99,7 +128,7 @@ def login():
         passwords.append(user['password'])
 
     if email in emails and password in passwords:
-        users[emails.index(email)]['login_status'] = "True"
+        users[emails.index(email)]['login_status'] = "logged_in"
         response = jsonify({
             "message":"User successfully logged in",
             "status": "200, ok",
@@ -113,14 +142,27 @@ def login():
 @app.route('/orders/<int:order_id>', methods=['GET'])
 def select_order(order_id):
     """Method that selects a meal to an order"""
-    return jsonify({'order': order_id})
+    all_orders = []    
+    for order in orders:
+        all_orders.append(order['id'])
+    if order_id in all_orders:
+        response =  jsonify({
+            "id": orders[all_orders.index(order_id)]['id'],
+            "meal_id": orders[all_orders.index(order_id)]['meal_id'],
+            "user_id": orders[all_orders.index(order_id)]['user_id'],
+            "time_created": orders[all_orders.index(order_id)]['time_created'],
+            "time_expiration": orders[all_orders.index(order_id)]['time_expiration']
+            })
+        response.status_code = 200
+        return response
 
 
 @app.route('/meals/', methods=['GET'])
-def get_meals():
+def get_all_meals():
     """This method returns all meals stored in the system"""
-    return jsonify({'meals': meals})
-
+    response = jsonify({'meals': meals}) 
+    response.status_code = 200
+    return response
 
 
 
@@ -132,9 +174,11 @@ def add_a_meal():
     time_created = str(request.get_json().get('time_created'))
     if name and price and time_created:
         response = jsonify({
-            'name': name,
-            'price': price,
-            'time_creatd': time.asctime(time.localtime(time.time()))
+            "id": len(meals),
+            "name": name,
+            "price": price,
+            "time_creatd": time.asctime(time.localtime(time.time())),
+            "time_expiration": time.asctime(time.localtime(time.time() + 600))
             })
         response.status_code = 201
         return response
@@ -181,17 +225,39 @@ def modify_order():
 @app.route('/menu/', methods=['GET'])
 def get_menu():
     """A Method to return the menu for the day"""
-    return jsonify({'menu': menu})
+    months_days = []
+    for month_day in menus:
+        months_days.append((month_day['time_created'][:10]))
+    
+    today_month_day =  (time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())))[:10]
+    if today_month_day in months_days:
+        response = jsonify({
+             'id': menus[months_days.index(today_month_day)]['id'],
+             'meal_ids': menus[months_days.index(today_month_day)]['meal_ids'],
+             'time_created': menus[months_days.index(today_month_day)]['time_created']
+        }) 
+        response.status_code = 200
+        return response
+ 
 
 
 @app.route('/menu/', methods=['POST'])
 def create_menu():
     """Method to create a menu for that day"""
     meal_ids = str(request.get_json().get('meal_ids'))
+    
     if meal_ids:
-        response = jsonify({
+        #add the new menu
+        todays_menu = {
+            'id': len(menus),
             'meal_ids': meal_ids,
-            'time_created': time.asctime(time.localtime(time.time()))
+            'time_created': time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+        }
+        menus.append(todays_menu)
+   
+        response = jsonify({
+            'message': "Today's menu has been loaded",
+            'status':  "201, created"
             })
         response.status_code = 201
         return response
