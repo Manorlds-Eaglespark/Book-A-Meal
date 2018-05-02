@@ -5,6 +5,21 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
+users = [
+    {
+        "name": "Bob",
+        "email": "bob@gmail.com", 
+        "password": "xxy210",
+        "login_status": "logged_out"
+    },
+    {
+        "name": "Frank Kizamba",
+        "email": "kizamba@gmail.com", 
+        "password": "xxppzulu210",
+        "login_status": "logged_out"
+    }
+]
+
 meals = [
     {
         'id': 1,
@@ -67,6 +82,27 @@ def signup():
             'email': email
             })
         response.status_code = 201
+        return response
+    #return None
+
+
+#Save a new user to make a signup
+@app.route('/auth/login', methods=['POST'])
+def login():
+    """Logging in user"""
+    email = str(request.get_json().get('email'))
+    password = str(request.get_json().get('password'))
+
+    emails, passwords = [], []    
+    for user in users:
+    emails.append(user['email'])
+    passwords.append(user['password'])
+
+    if email in emails and password in passwords:
+        response = jsonify({
+            "message":"User successfully logged in"
+            })
+        response.status_code = 200
         return response
     #return None
 
