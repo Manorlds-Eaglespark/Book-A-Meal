@@ -5,11 +5,7 @@ app = Flask(__name__)
 
 #we need a User object, this object will represent the Customers and Restaurant caterers who will be using the application
 class User:
-   id 
-   name = ""
-   email = ""
-   admin_status = "" 
-   time_created  = 0.0 
+   
    #Constructor for the User object, for initialization
    def __init__(self, name, email):
       self.id = random.randint(1001)
@@ -20,10 +16,7 @@ class User:
 
 #Customers will be ordering meal instances whose ids will be added to the ordered items for customers
 class Meal:
-   id 
-   name = ""
-   price = 0
-   time_created = 0.0 
+   
    #Constructor
    def __init__(self, name, price):
       self.id = random.randint(1001)
@@ -35,10 +28,6 @@ class Meal:
 
 #We will record the meal option selected and by who in this object
 class Order:
-   id
-   mealId = 0          #the meal which was ordered
-   userId = 0          #the person that ordered the meal
-   time_created = 0.0    #time the meal was ordered
    
    #constructor
    def __init__(self, mealId, userId):
@@ -50,9 +39,6 @@ class Order:
 #Menu object will just be an object to help us hold meal Ids selected for today's serving
 #MealIds is a string made from a string of meal ids separated by commas e.g "10,5,6,18" 
 class Menu:
-   id 
-   mealIds = 0
-   date = 0.0
    
    def __init__(self, mealIds):
       self.id = random.randint(1001)
