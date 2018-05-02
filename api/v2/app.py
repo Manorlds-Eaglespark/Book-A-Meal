@@ -95,12 +95,13 @@ def login():
 
     emails, passwords = [], []    
     for user in users:
-    emails.append(user['email'])
-    passwords.append(user['password'])
+        emails.append(user['email'])
+        passwords.append(user['password'])
 
     if email in emails and password in passwords:
         response = jsonify({
-            "message":"User successfully logged in"
+            "message":"User successfully logged in",
+            "status": "200, ok"
             })
         response.status_code = 200
         return response
